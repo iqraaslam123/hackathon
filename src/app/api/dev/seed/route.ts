@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { jsonError, jsonOk } from "@/lib/api";
 import { connectDB } from "@/lib/db";
+import { type AuthRole } from "@/lib/authz";
 import User from "@/lib/models/User";
 import Ticket, { nextTicketNumber } from "@/lib/models/Ticket";
 
@@ -12,7 +13,7 @@ const SEED_CREDENTIALS = [
   { email: "admin@supportflow.app", name: "SupportFlow Admin", username: "sflowadmin", role: "admin" },
   { email: "agent@supportflow.app", name: "Amelia Agent", username: "sflowagent", role: "agent" },
   { email: "demo@supportflow.app", name: "Dennis Customer", username: "sflowdemo", role: "customer" },
-];
+] satisfies { email: string; name: string; username: string; role: AuthRole }[];
 
 /**
  * Dev/demo helper: creates a customer, an agent and an admin that can be used
