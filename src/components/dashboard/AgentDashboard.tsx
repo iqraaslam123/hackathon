@@ -172,7 +172,10 @@ export function AgentDashboard({
         aiPriority: res.ticket.aiPriority || "",
         aiSummary: res.ticket.aiSummary || "",
       });
-      await showSuccess("AI suggestion regenerated", res.message);
+      await showSuccess(
+        "AI suggestion regenerated",
+        `Category: ${res.ticket.aiCategory}, Priority: ${res.ticket.aiPriority}`
+      );
     } catch (err) {
       await showError("Could not regenerate", (err as Error).message);
     } finally {

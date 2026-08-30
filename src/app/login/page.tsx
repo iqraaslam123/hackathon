@@ -17,7 +17,7 @@ function LoginForm() {
   const params = useSearchParams();
   const error = params.get("error");
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ identifier: string; password: string }>({
     identifier: ROLE_OPTIONS[0].demoEmail,
     password: DEMO_PASSWORD,
   });

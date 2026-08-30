@@ -5,7 +5,7 @@ import { runTriage } from "@/lib/ai";
 import Ticket, { nextTicketNumber } from "@/lib/models/Ticket";
 import { fetchTicket, canViewTicket, canEditTicket } from "@/lib/ticketAccess";
 import { serializeTicket } from "@/lib/ticketSerializer";
-import { isCategory, isStatus } from "@/lib/ticketConstants";
+import { isCategory, isStatus, type Category } from "@/lib/ticketConstants";
 import { notifyStaffNewTicket } from "@/lib/notifications";
 import { emailStaffNewTicket } from "@/lib/notifyEmail";
 
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   if (description.length > 5000)
     return jsonError("Description must be 5000 characters or fewer.");
 
-  let category: string | undefined;
+  let category: Category | undefined;
   if (body.category !== undefined && body.category !== "") {
     if (!isCategory(body.category)) return jsonError("Invalid category.");
     category = body.category;

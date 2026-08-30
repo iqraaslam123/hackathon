@@ -84,11 +84,15 @@ export function ChatBot() {
 
   function startListening() {
     if (!sttAvailable) return;
-    const SR =
-      (window as unknown as Record<string, unknown>).SpeechRecognition ||
-      (window as unknown as Record<string, unknown>).webkitSpeechRecognition;
+    type SRConstructor = { new (): SpeechRecognitionLike };
+    const globalWin = window as unknown as {
+      SpeechRecognition?: SRConstructor;
+      webkitSpeechRecognition?: SRConstructor;
+    };
+    const SR = globalWin.SpeechRecognition || globalWin.webkitSpeechRecognition;
+    if (!SR) return;
     try {
-      const rec = new SR() as SpeechRecognitionLike;
+      const rec = new SR();
       rec.lang = "ur-PK";
       rec.interimResults = true;
       rec.continuous = false;
